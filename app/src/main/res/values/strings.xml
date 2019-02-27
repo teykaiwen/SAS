@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">CleanMyRiver</string>
+    <string name="action_settings">Settings</string>
+    <string name="title">Sedimentation Analytics Software</string>
+    <string name="title_activity_about">AboutActivity</string>
+    <string name="title_activity_history">HistoryActivity</string>
+    <string name="title_activity_help">HelpActivity</string>
+    <string name="camera">Camera</string>
+    <string name="history">History</string>
+    <string name="help">Help</string>
+    <string name="todo">TODO</string>
+    <string name="got_it">GOT IT!</string>
+    <string name="guide_box">
+        1. Make sure it is in the guide box\n2. Snap a photo</string>
+    <string name="clean_my_river">Clean My River</string>
+    <string name="about">About</string>
+</resources>
