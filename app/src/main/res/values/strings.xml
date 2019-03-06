@@ -14,4 +14,7 @@
         1. Make sure it is in the guide box\n2. Snap a photo</string>
     <string name="clean_my_river">Clean My River</string>
     <string name="about">About</string>
+    <string name="displayimage">Image</string>
+    <string name="title_activity_dashboard_frag">DashboardFrag</string>
+
 </resources>

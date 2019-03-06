@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
-            >
+            android:background="@color/colorPrimary">
 
             <ImageView
                 android:id="@+id/logo"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
+                android:layout_marginLeft="20dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="20dp"
-                android:layout_marginLeft="20dp"
                 android:src="@drawable/rivericon" />
 
             <TextView
@@ -34,126 +34,149 @@
                 android:layout_marginRight="20dp"
                 android:text="@string/clean_my_river"
                 android:textColor="@color/colorText"
-                android:textSize="28dp"/>
+                android:textSize="28dp" />
 
 
         </RelativeLayout>
 
-        <GridLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:alignmentMode="alignMargins"
-            android:columnCount="2"
-            android:columnOrderPreserved="false"
-            android:rowCount="2">
+            android:background="@drawable/env2"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
 
             <android.support.v7.widget.CardView
                 android:id="@+id/camera_button"
-                android:layout_width="120dp"
+                android:layout_width="match_parent"
                 android:layout_height="120dp"
                 android:layout_rowWeight="1"
                 android:layout_columnWeight="1"
                 android:layout_margin="20dp"
                 android:layout_marginTop="50dp"
+                app:cardBackgroundColor="#95FFFFFF"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="6dp">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:background="#95FFFFFF"
                     android:gravity="center"
-                    android:padding="16dp"/>
+                    android:orientation="vertical"
+                    android:visibility="visible">
 
-                <ImageView
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:layout_gravity="center"
-                    android:src="@drawable/camera2" />
+                    <ImageView
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/camera2" />
 
+                    <TextView
+                        android:id="@+id/Camera"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_margin="8dp"
+                        android:shadowColor="@color/common_google_signin_btn_text_dark_focused"
+                        android:text="Camera"
+                        android:textAllCaps="false"
+                        android:textAppearance="@style/TextAppearance.AppCompat"
+                        android:textColor="@color/common_google_signin_btn_text_light_pressed"
+                        android:textSize="15dp"
+                        app:fontFamily="monospace" />
 
-            </android.support.v7.widget.CardView>
-
-            <android.support.v7.widget.CardView
-                android:id="@+id/history_button"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:layout_rowWeight="1"
-                android:layout_columnWeight="1"
-                android:layout_margin="20dp"
-                android:layout_marginTop="50dp"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="6dp">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:padding="16dp"/>
-
-                <ImageView
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:layout_gravity="center"
-                    android:src="@drawable/history2" />
+                </LinearLayout>
 
 
             </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView
                 android:id="@+id/help_button"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_rowWeight="1"
                 android:layout_columnWeight="1"
                 android:layout_margin="20dp"
                 android:layout_marginTop="50dp"
+                app:cardBackgroundColor="#95FFFFFF"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="6dp">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:padding="16dp"/>
+                    android:background="#95FFFFFF"
+                    android:orientation="vertical">
 
-                <ImageView
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:layout_gravity="center"
-                    android:src="@drawable/guide" />
+                    <ImageView
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/guide" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_margin="8dp"
+                        android:gravity="center"
+                        android:shadowColor="@color/common_google_signin_btn_text_dark_focused"
+                        android:text="Help"
+                        android:textAllCaps="false"
+                        android:textAppearance="@style/TextAppearance.AppCompat"
+                        android:textColor="@color/common_google_signin_btn_text_light_pressed"
+                        android:textSize="15dp"
+                        app:fontFamily="monospace" />
+
+                </LinearLayout>
 
 
             </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView
                 android:id="@+id/about_button"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_rowWeight="1"
                 android:layout_columnWeight="1"
                 android:layout_margin="20dp"
                 android:layout_marginTop="50dp"
+                app:cardBackgroundColor="#95FFFFFF"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="6dp">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:padding="16dp"/>
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#95FFFFFF"
+                    android:orientation="vertical">
 
-                <ImageView
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:layout_gravity="center"
-                    android:src="@drawable/about2" />
+                    <ImageView
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/about2" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_margin="8dp"
+                        android:shadowColor="@color/common_google_signin_btn_text_dark_focused"
+                        android:text="Information"
+                        android:textAllCaps="false"
+                        android:textAppearance="@style/TextAppearance.AppCompat"
+                        android:textColor="@color/common_google_signin_btn_text_light_pressed"
+                        android:textSize="15dp"
+                        app:fontFamily="monospace" />
+                </LinearLayout>
 
 
             </android.support.v7.widget.CardView>
 
 
+        </LinearLayout>
 
-
-        </GridLayout>
     </LinearLayout>
 </ScrollView>

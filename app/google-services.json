@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "101261948268",
+    "firebase_url": "https://sedimentation-analysis-c5240.firebaseio.com",
+    "project_id": "sedimentation-analysis-c5240",
+    "storage_bucket": "sedimentation-analysis-c5240.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:101261948268:android:e1aba002568a2d73",
+        "android_client_info": {
+          "package_name": "com.example.fawwazazrin.cleanmyriver_test"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "101261948268-fldvb5r1hb7fefmdv04tt26h8865tk5o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA12jbSJeKjsBV4T_GqL86jZSzfjnqcbtk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
