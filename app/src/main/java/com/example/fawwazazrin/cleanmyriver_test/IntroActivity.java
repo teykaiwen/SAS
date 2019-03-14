@@ -42,7 +42,7 @@ public class IntroActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
 
-        // when this activity is about to be launch we need to check if its openened before or not
+        // when this activity is about to be launch we need to check if its opened before or not
 
         if (restorePrefData()) {
 
@@ -74,7 +74,7 @@ public class IntroActivity extends AppCompatActivity {
         mList.add(new ScreenItem("United we Stand","Together we can save our rivers",R.drawable.envhelp));
 
         // setup viewpager
-        screenPager =findViewById(R.id.screen_viewpager);
+        screenPager = findViewById(R.id.screen_viewpager);
         introViewPagerAdapter = new IntroViewPagerAdapter(this,mList);
         screenPager.setAdapter(introViewPagerAdapter);
 
