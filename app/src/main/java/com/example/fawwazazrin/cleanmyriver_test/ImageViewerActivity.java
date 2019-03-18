@@ -51,7 +51,7 @@ import java.util.Map;
 
 import static java.lang.Character.isUpperCase;
 
-public class ImageViewerActivity extends AppCompatActivity {
+public class ImageViewerActivity extends MainActivity {
 
     public int REQUEST_CODE = 20;
     private static final int MY_CAMERA_REQUEST_CODE = 100;
@@ -75,56 +75,9 @@ public class ImageViewerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_imageviewer);
-        coordinates = (TextView) findViewById(R.id.coordinates);
-        addressText = (TextView) findViewById(R.id.addrTextView);
+        //coordinates = (TextView) findViewById(R.id.coordinates);
+        //addressText = (TextView) findViewById(R.id.addrTextView);
         uploadButton = (Button) findViewById(R.id.upload);
-
-        //          //
-        //  CAMERA  //
-        //          //
-        takePhoto();
-        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-
-        locationListener = new LocationListener() {
-            @Override
-            public void onLocationChanged(Location location) {
-                loclong = location.getLongitude();
-                loclad = location.getLatitude();
-
-                //prints out the coordinates
-                coordinates.append("\n " + loclad + " " + loclong);
-                getAddress(loclad, loclong);
-
-            }
-
-            @Override
-            public void onStatusChanged(String provider, int status, Bundle extras) {
-
-            }
-
-            @Override
-            public void onProviderEnabled(String provider) {
-
-            }
-
-            @Override
-            public void onProviderDisabled(String provider) {
-                Intent i = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                startActivity(i);
-            }
-        };
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                requestPermissions(new String[]
-                        {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.INTERNET}, 10
-                );
-                return;
-
-            } else {
-                locationFind();
-            }
-        }
 
         uploadButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -135,14 +88,34 @@ public class ImageViewerActivity extends AppCompatActivity {
             }
 
         });
+
+        takePhoto();
+    }
+
+    //onActivityResult() functions right after image is taken
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+
+                //BitmapFactory to decode the image path into bitmap
+                BitmapFactory.Options bmpFactoryOptions = new BitmapFactory.Options();
+                Bitmap bmp = BitmapFactory.decodeFile(mCurrentPath, bmpFactoryOptions);
+                imageView = findViewById(R.id.imageView);
+                imageView.setImageBitmap(bmp);
+                Log.i(TAG,"Address: " + finaladdress);
+
+            }
+        }
     }
 
     //method to launch the camera
     public void onLaunchCamera() throws Exception {
 
         //intent to launch phone's camera
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-
+        Intent intent = new Intent();
+        intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
 
         File photofile = null;
         try {
@@ -164,10 +137,6 @@ public class ImageViewerActivity extends AppCompatActivity {
             intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
             startActivityForResult(intent, REQUEST_CODE);
         }
-
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-        startActivityForResult(intent, REQUEST_CODE);
-
     }
 
     //method to create file name for image
@@ -178,42 +147,10 @@ public class ImageViewerActivity extends AppCompatActivity {
         File image = File.createTempFile(imageFileName,  /* prefix */".jpg",         /* suffix */storageDir);    /* directory */
 
         mCurrentPath = image.getAbsolutePath();
+        Log.i(TAG, "Name of file: " + mCurrentPath);
         return image;
     }
 
-    //onActivityResult() functions right after image is taken
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_CODE) {
-            if (resultCode == RESULT_OK) {
-
-                //BitmapFactory to decode the image path into bitmap
-                BitmapFactory.Options bmpFactoryOptions = new BitmapFactory.Options();
-                Bitmap bmp = BitmapFactory.decodeFile(mCurrentPath, bmpFactoryOptions);
-                imageView = findViewById(R.id.imageView);
-                imageView.setImageBitmap(bmp);
-
-
-            }
-        }
-    }
-
-    //request location
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        switch (requestCode) {
-            case 10:
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    locationFind();
-                }
-                return;
-        }
-    }
-
-    //method to request permission for location
-    public void locationFind() {
-        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 5000, 0, locationListener);
-    }
 
     //method to get phone model
     public void getPhoneModel() {
@@ -224,30 +161,10 @@ public class ImageViewerActivity extends AppCompatActivity {
     }
 
     //method to get the address from the latitude and longitude retrieved by the phone's GPS
-    public void getAddress(double loclad, double loclong) {
-        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
-        //StringBuilder builder = new StringBuilder();
-        try {
-            List<Address> address = geocoder.getFromLocation(loclad, loclong, 1);
-
-            if (address != null) {
-
-                String city = address.get(0).getAddressLine(0);
-                String state = address.get(0).getAdminArea();
-                finaladdress = city + " " + state;
-                Log.w(TAG, "Address: " + finaladdress);
-                addressText.setText(finaladdress);
-
-            } else {
-                Log.w(TAG, "Address is null");
-            }
-        } catch (IOException e) {
-        } catch (NullPointerException e) {
-        }
-    }
 
     //method to request permission to access/write information to storage
     public void takePhoto() {
+
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)==PackageManager.PERMISSION_GRANTED) {
             try {
                 Log.i(TAG, "Permission is OK");
@@ -257,7 +174,6 @@ public class ImageViewerActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
-
         //if no permission is available, request from user
         else {
             if (shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
