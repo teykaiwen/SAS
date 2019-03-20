@@ -7,6 +7,9 @@
     <color name="title">#000000</color>
     <color name="lightorange">#FB8C00</color>
     <color name="darkorange">#E64A19</color>
+    <color name="red">#ef5350</color>
+    <color name="red2">#ff867c</color>
+    <color name="blue2">#6ab7ff</color>
     <!-- colors for button style -->
 
     <color name="gradient_start_color">#4c84ff</color>

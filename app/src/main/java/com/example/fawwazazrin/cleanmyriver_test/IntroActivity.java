@@ -59,7 +59,7 @@ public class IntroActivity extends AppCompatActivity {
 
         //getSupportActionBar().hide();
 
-        // ini views
+        // in views
         btnNext = findViewById(R.id.btn_next);
         btnGetStarted = findViewById(R.id.btn_get_started);
         tabIndicator = findViewById(R.id.tab_indicator);
@@ -94,10 +94,9 @@ public class IntroActivity extends AppCompatActivity {
                     position++;
                     screenPager.setCurrentItem(position);
 
-
                 }
 
-                if (position == mList.size()-1) { // when we rech to the last screen
+                if (position == mList.size()-1) { // when we reach to the last screen
 
                     loaddLastScreen();
 
@@ -122,7 +121,6 @@ public class IntroActivity extends AppCompatActivity {
 
                 }
 
-
             }
 
             @Override
@@ -146,10 +144,9 @@ public class IntroActivity extends AppCompatActivity {
 
 
                 //open main activity
-
-                Intent mainActivity = new Intent(getApplicationContext(),MainActivity.class);
+                Intent mainActivity = new Intent(IntroActivity.this,MainActivity.class);
                 startActivity(mainActivity);
-                savePrefsData();
+                //savePrefsData();
                 finish();
 
 
@@ -181,6 +178,7 @@ public class IntroActivity extends AppCompatActivity {
 
     }
 
+    /*
     private void savePrefsData() {
 
         SharedPreferences pref = getApplicationContext().getSharedPreferences("myPrefs",MODE_PRIVATE);
@@ -189,7 +187,7 @@ public class IntroActivity extends AppCompatActivity {
         editor.commit();
 
 
-    }
+    }*/
 
     // show the GETSTARTED Button and hide the indicator and the next button
     private void loaddLastScreen() {

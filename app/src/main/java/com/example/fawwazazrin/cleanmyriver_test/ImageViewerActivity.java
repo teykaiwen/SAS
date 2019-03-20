@@ -50,6 +50,7 @@ import com.google.firebase.storage.StorageReference;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -85,6 +86,7 @@ public class ImageViewerActivity extends MainActivity {
     String URL = "";
     StringRequest stringRequest;
     String SSC;
+    TextView sscvalue;
 
     /*
     private ProgressBar progressBar;
@@ -97,6 +99,7 @@ public class ImageViewerActivity extends MainActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_imageview2);
 
+        sscvalue = (TextView) findViewById(R.id.sscvalue);
         CardView cardView = (CardView) findViewById(R.id.homebutton);
         cardView.setOnClickListener(new View.OnClickListener() {
             @Override
