@@ -5,6 +5,8 @@
     <color name="colorAccent">#D81B60</color>
     <color name="colorText">#ffffff</color>
     <color name="title">#000000</color>
+    <color name="lightorange">#FB8C00</color>
+    <color name="darkorange">#E64A19</color>
     <!-- colors for button style -->
 
     <color name="gradient_start_color">#4c84ff</color>

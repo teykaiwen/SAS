@@ -25,6 +25,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v4.view.animation.LinearOutSlowInInterpolator;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
@@ -94,20 +95,18 @@ public class ImageViewerActivity extends MainActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_imageviewer);
-        //coordinates = (TextView) findViewById(R.id.coordinates);
-        //addressText = (TextView) findViewById(R.id.addrTextView);
-        uploadButton = (Button) findViewById(R.id.upload);
+        setContentView(R.layout.activity_imageview2);
 
-        uploadButton.setOnClickListener(new View.OnClickListener() {
+        CardView cardView = (CardView) findViewById(R.id.homebutton);
+        cardView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
                 Intent intent = new Intent(ImageViewerActivity.this, MainActivity.class);
                 startActivity(intent);
-
             }
-
         });
+        //coordinates = (TextView) findViewById(R.id.coordinates);
+        //addressText = (TextView) findViewById(R.id.addrTextView);
 
         takePhoto();
     }
@@ -122,8 +121,8 @@ public class ImageViewerActivity extends MainActivity {
                 //BitmapFactory to decode the image path into bitmap
                 BitmapFactory.Options bmpFactoryOptions = new BitmapFactory.Options();
                 Bitmap bmp = BitmapFactory.decodeFile(mCurrentPath, bmpFactoryOptions);
-                imageView = findViewById(R.id.imageView);
-                imageView.setImageBitmap(bmp);
+                //imageView = findViewById(R.id.imageView);
+                //imageView.setImageBitmap(bmp);
                 Log.i("LOCATION","Address: " + finaladdress);
                 Log.i("LOCATION", "latitude: " + loc_lat);
                 Log.i("LOCATION", "longitude: " + loc_long);
@@ -258,7 +257,7 @@ public class ImageViewerActivity extends MainActivity {
         Log.i("VOLLEY", "Request OK");
     }
 
-    public void  () {
+    public void getHttpRequest() {
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         stringRequest = new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {

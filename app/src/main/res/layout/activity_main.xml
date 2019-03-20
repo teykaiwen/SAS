@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
+    android:background="@drawable/btn_gradient_style"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
@@ -15,7 +15,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimary">
+            android:background="@drawable/btn_gradient_style">
 
             <ImageView
                 android:id="@+id/logo"
@@ -54,14 +54,13 @@
                 android:layout_columnWeight="1"
                 android:layout_margin="20dp"
                 android:layout_marginTop="50dp"
-                app:cardBackgroundColor="#95FFFFFF"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="6dp">
+                app:cardBackgroundColor="@color/colorText"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="30dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="#95FFFFFF"
                     android:gravity="center"
                     android:orientation="vertical"
                     android:visibility="visible">
@@ -99,14 +98,13 @@
                 android:layout_columnWeight="1"
                 android:layout_margin="20dp"
                 android:layout_marginTop="50dp"
-                app:cardBackgroundColor="#95FFFFFF"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="6dp">
+                app:cardBackgroundColor="@color/colorText"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="30dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="#95FFFFFF"
                     android:orientation="vertical">
 
                     <ImageView
@@ -142,14 +140,13 @@
                 android:layout_columnWeight="1"
                 android:layout_margin="20dp"
                 android:layout_marginTop="50dp"
-                app:cardBackgroundColor="#95FFFFFF"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="6dp">
+                app:cardBackgroundColor="@color/colorText"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="30dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="#95FFFFFF"
                     android:orientation="vertical">
 
                     <ImageView
