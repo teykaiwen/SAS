@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
                 loc_long = location.getLongitude();
                 loc_lat = location.getLatitude();
                 Log.i(TAG, "Location: " + loc_long + " " + loc_lat);
-                getAddress(loc_lat, loc_long);
+                //getAddress(loc_lat, loc_long);
 
             }
 
@@ -128,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
         locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 5000, 0, locationListener);
     }
 
-    public void getAddress(double loc_lat, double loc_long) {
+    public String getAddress(double loc_lat, double loc_long) {
         Geocoder geocoder = new Geocoder(this, Locale.getDefault());
         //StringBuilder builder = new StringBuilder();
         try {
@@ -143,11 +143,16 @@ public class MainActivity extends AppCompatActivity {
                 //ImageActivity.setAddress(finaladdress);
                 //ImageActivity.appearAddress();
 
+                return finaladdress;
+
             } else {
                 Log.w(TAG, "Address is null");
+                return null;
             }
         } catch (IOException e) {
+            return null;
         } catch (NullPointerException e) {
+            return null;
         }
     }
 

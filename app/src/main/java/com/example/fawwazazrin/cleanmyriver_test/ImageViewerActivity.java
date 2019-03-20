@@ -16,6 +16,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.provider.Settings;
@@ -24,20 +25,32 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v4.view.animation.LinearOutSlowInInterpolator;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -61,15 +74,22 @@ public class ImageViewerActivity extends MainActivity {
     private LocationManager locationManager;
     private LocationListener locationListener;
     private Button uploadButton;
-    private double loclong;
-    private double loclad;
     private String manufacturer;
     private String model;
     private static String TAG = "MyActivity";
     private String mCurrentPath;
     private Uri photoURI;
-    private String finaladdress;
+    byte[] baos;
+    String imgString;
+    String URL = "";
+    StringRequest stringRequest;
+    String SSC;
 
+    /*
+    private ProgressBar progressBar;
+    private Handler mhandler = new Handler();
+    private int mProgressbar = 0;
+*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,7 +124,18 @@ public class ImageViewerActivity extends MainActivity {
                 Bitmap bmp = BitmapFactory.decodeFile(mCurrentPath, bmpFactoryOptions);
                 imageView = findViewById(R.id.imageView);
                 imageView.setImageBitmap(bmp);
-                Log.i(TAG,"Address: " + finaladdress);
+                Log.i("LOCATION","Address: " + finaladdress);
+                Log.i("LOCATION", "latitude: " + loc_lat);
+                Log.i("LOCATION", "longitude: " + loc_long);
+
+                getPhoneModel();
+
+                try {
+                    getBytesFromBitmap(bmp);
+                    sendHttpRequest();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
 
             }
         }
@@ -180,6 +211,70 @@ public class ImageViewerActivity extends MainActivity {
             }
             requestPermissions(new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE}, MY_CAMERA_REQUEST_CODE);
         }
+    }
+
+    public void getBytesFromBitmap(Bitmap bitmap) throws JSONException {
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 90, stream);
+        baos = stream.toByteArray();
+        imgString = Base64.encodeToString(baos, Base64.NO_WRAP);
+        Log.i(TAG, "Byte: " + imgString);
+
+    }
+
+    public void sendHttpRequest() {
+
+        try {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("phone_brand", manufacturer);
+            jsonObject.put("location", getAddress(loc_lat, loc_long));
+            jsonObject.put("latitude", loc_lat);
+            jsonObject.put("longitude", loc_long);
+            jsonObject.put("image", imgString);
+
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, URL, jsonObject, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    Log.i("VOLLEY", response.toString());
+                }
+            }, new com.android.volley.Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    error.printStackTrace();
+                    Log.i("VOLLEY", error.toString());
+                }
+            });
+
+            jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(0, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+            Log.i("VOLLEY", jsonObjectRequest.toString());
+            Log.i("VOLLEY", "Object: " + jsonObject.toString());
+
+            Volley.newRequestQueue(this).add(jsonObjectRequest);
+
+        } catch (JSONException j) {
+            Log.i("JSON", j.toString());
+        }
+
+        Log.i("VOLLEY", "Request OK");
+    }
+
+    public void  () {
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        stringRequest = new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.i("RECEIVE", response);
+                SSC = response;
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.i("RECEIVE", error.toString());
+            }
+        });
+
+        requestQueue.add(stringRequest);
     }
 
 
