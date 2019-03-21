@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(MainActivity.this, ImageViewerActivity.class);
+                Intent intent = new Intent(MainActivity.this, CameraActivity.class);
                 startActivity(intent);
 
             }
