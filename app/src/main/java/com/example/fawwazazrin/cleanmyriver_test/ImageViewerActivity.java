@@ -29,6 +29,8 @@ import android.support.v7.widget.CardView;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -48,6 +50,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.w3c.dom.Text;
@@ -83,10 +86,13 @@ public class ImageViewerActivity extends MainActivity {
     private Uri photoURI;
     byte[] baos;
     String imgString;
-    String URL = "";
+    String URL = "http://192.168.137.1:5000/upload";
     StringRequest stringRequest;
-    String SSC;
+    JSONObject SSC;
+    String ssc_value;
     TextView sscvalue;
+    TextView home;
+    Animation a1, a2;
 
     /*
     private ProgressBar progressBar;
@@ -99,19 +105,31 @@ public class ImageViewerActivity extends MainActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_imageview2);
 
+        takePhoto();
+
+        CardView ssccard = (CardView) findViewById(R.id.ssccard);
         sscvalue = (TextView) findViewById(R.id.sscvalue);
-        CardView cardView = (CardView) findViewById(R.id.homebutton);
-        cardView.setOnClickListener(new View.OnClickListener() {
+        home = (TextView) findViewById(R.id.homebutton);
+
+        a1 = AnimationUtils.loadAnimation(this, R.anim.anime_top_to_bottom);
+        a2 = AnimationUtils.loadAnimation(this, R.anim.anime_bottom_to_top);
+
+        ssccard.setAnimation(a1);
+        home.setAnimation(a2);
+
+        home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ImageViewerActivity.this, MainActivity.class);
                 startActivity(intent);
             }
         });
+
+
         //coordinates = (TextView) findViewById(R.id.coordinates);
         //addressText = (TextView) findViewById(R.id.addrTextView);
 
-        takePhoto();
+
     }
 
     //onActivityResult() functions right after image is taken
@@ -226,10 +244,12 @@ public class ImageViewerActivity extends MainActivity {
 
     public void sendHttpRequest() {
 
+        finaladdress = getAddress(loc_lat, loc_long);
+
         try {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("phone_brand", manufacturer);
-            jsonObject.put("location", getAddress(loc_lat, loc_long));
+            jsonObject.put("location", finaladdress);
             jsonObject.put("latitude", loc_lat);
             jsonObject.put("longitude", loc_long);
             jsonObject.put("image", imgString);
@@ -238,12 +258,23 @@ public class ImageViewerActivity extends MainActivity {
                 @Override
                 public void onResponse(JSONObject response) {
                     Log.i("VOLLEY", response.toString());
+                    SSC = response;
+
+                    try {
+                        ssc_value = SSC.getString("ssc"); }
+                    catch (JSONException j) {
+                        j.printStackTrace();
+                    }
+
+                    Log.i("RESPONSE", ssc_value);
+                    sscvalue.setText(ssc_value);
+
                 }
             }, new com.android.volley.Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     error.printStackTrace();
-                    Log.i("VOLLEY", error.toString());
+                    Log.i("RESPONSE ERROR", error.toString());
                 }
             });
 
@@ -258,25 +289,6 @@ public class ImageViewerActivity extends MainActivity {
         }
 
         Log.i("VOLLEY", "Request OK");
-    }
-
-    public void getHttpRequest() {
-
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        stringRequest = new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                Log.i("RECEIVE", response);
-                SSC = response;
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.i("RECEIVE", error.toString());
-            }
-        });
-
-        requestQueue.add(stringRequest);
     }
 
 

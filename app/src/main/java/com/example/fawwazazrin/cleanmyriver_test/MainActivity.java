@@ -23,6 +23,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -44,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
     static double loc_lat;
     String TAG = "MainActivity";
     String finaladdress;
+    Animation topanimation;
 
 
     @Override
@@ -51,18 +54,28 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        topanimation = AnimationUtils.loadAnimation(this, R.anim.anime_top_to_bottom);
         CardView camera_button = (CardView) findViewById(R.id.camera_button);
+        CardView help_button = (CardView) findViewById(R.id.help_button);
+        CardView about_button = (CardView) findViewById(R.id.about_button);
+
+        camera_button.setAnimation(topanimation);
+        help_button.setAnimation(topanimation);
+        about_button.setAnimation(topanimation);
+
+
+
         camera_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(MainActivity.this, ImageViewerActivity.class);
+                Intent intent = new Intent(MainActivity.this, DemoActivity.class);
                 startActivity(intent);
 
             }
         });
 
-        CardView help_button = (CardView) findViewById(R.id.help_button);
+
         help_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -71,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        CardView about_button = (CardView) findViewById(R.id.about_button);
+
         about_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -1,47 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/btn_gradient_style"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-
-    <android.support.v7.widget.CardView
-        android:id="@+id/ssccard"
-        android:layout_width="300dp"
-        android:layout_height="100dp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp"
-        app:cardBackgroundColor="@color/colorText"
-        app:cardCornerRadius="@android:dimen/app_icon_size"
-        app:cardElevation="150dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.393">
-
-        <TextView
-            android:id="@+id/sscvalue"
-            android:layout_width="181dp"
-            android:layout_height="68dp"
-            android:layout_gravity="center"
-            android:fontFamily="@font/roboto_light"
-            android:gravity="center"
-            android:textColor="@color/title"
-            android:textSize="32dp" />
-
-    </android.support.v7.widget.CardView>
+    tools:context=".DemoActivity">
 
     <TextView
-        android:id="@+id/homebutton"
-        android:layout_width="253dp"
+        android:id="@+id/t1"
+        android:layout_width="331dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
@@ -51,16 +19,35 @@
         android:layout_marginBottom="8dp"
         android:fontFamily="@font/roboto_condensed"
         android:gravity="center"
-        android:text="Home"
-        android:textAllCaps="true"
+        android:text="Please note that the calculations of the SSC value is still being refined by the researchers and is somewhat not that accurate"
         android:textColor="@color/colorText"
-        android:textSize="30dp"
+        android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.872" />
+        app:layout_constraintVertical_bias="0.364" />
 
+    <TextView
+        android:id="@+id/t2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        android:fontFamily="@font/roboto_condensed"
+        android:gravity="center"
+        android:text="I UNDERSTAND!"
+        android:textColor="@color/colorText"
+        android:textSize="25dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.785" />
 
 </android.support.constraint.ConstraintLayout>
