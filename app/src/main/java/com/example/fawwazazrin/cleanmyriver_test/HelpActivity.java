@@ -13,14 +13,6 @@ public class HelpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_help);
 
-        Button got_it = (Button) findViewById(R.id.got_it);
-        got_it.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(HelpActivity.this, MainActivity.class);
-                startActivity(intent);
-            }
-        });
     }
 
 

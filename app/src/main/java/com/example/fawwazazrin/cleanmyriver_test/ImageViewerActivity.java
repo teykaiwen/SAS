@@ -73,12 +73,6 @@ public class ImageViewerActivity extends MainActivity {
 
     public int REQUEST_CODE = 20;
     private static final int MY_CAMERA_REQUEST_CODE = 100;
-    public ImageView imageView;
-    private TextView coordinates;
-    private TextView addressText;
-    private LocationManager locationManager;
-    private LocationListener locationListener;
-    private Button uploadButton;
     private String manufacturer;
     private String model;
     private static String TAG = "MyActivity";
@@ -86,8 +80,7 @@ public class ImageViewerActivity extends MainActivity {
     private Uri photoURI;
     byte[] baos;
     String imgString;
-    String URL = "http://192.168.137.1:5000/upload";
-    StringRequest stringRequest;
+    String URL = "https://192.168.137.1:5000/upload";
     JSONObject SSC;
     String ssc_value;
     TextView sscvalue;
@@ -164,6 +157,7 @@ public class ImageViewerActivity extends MainActivity {
     //method to launch the camera
     public void onLaunchCamera() throws Exception {
 
+        Log.i("ONLAUNCHCAMERA", "function working");
         //intent to launch phone's camera
         Intent intent = new Intent();
         intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -245,6 +239,7 @@ public class ImageViewerActivity extends MainActivity {
     public void sendHttpRequest() {
 
         finaladdress = getAddress(loc_lat, loc_long);
+        Log.i("ADDRESS", finaladdress);
 
         try {
             JSONObject jsonObject = new JSONObject();
@@ -267,7 +262,10 @@ public class ImageViewerActivity extends MainActivity {
                     }
 
                     Log.i("RESPONSE", ssc_value);
+                    Animation a = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.anime_bottom_to_top);
+                    sscvalue.setAnimation(a);
                     sscvalue.setText(ssc_value);
+
 
                 }
             }, new com.android.volley.Response.ErrorListener() {
