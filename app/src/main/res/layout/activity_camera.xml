@@ -60,8 +60,8 @@
             android:layout_alignBottom="@+id/transparentView"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="0dp"
-            android:background="@color/common_google_signin_btn_text_dark_focused"
-            app:srcCompat="@color/common_google_signin_btn_text_light_pressed" />
+            android:background="@color/title"
+            app:srcCompat="@color/title" />
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/cameraButton"
@@ -82,7 +82,7 @@
             android:layout_marginBottom="12dp"
             android:clickable="true"
             android:focusableInTouchMode="true"
-            app:backgroundTint="@color/common_google_signin_btn_text_dark_disabled"
+            app:backgroundTint="@color/title"
             app:srcCompat="@drawable/camera_button" />
 
     </RelativeLayout>

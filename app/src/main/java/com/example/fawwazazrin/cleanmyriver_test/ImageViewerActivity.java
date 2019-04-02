@@ -45,10 +45,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -67,6 +63,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import static android.util.Base64.DEFAULT;
 import static java.lang.Character.isUpperCase;
 
 public class ImageViewerActivity extends MainActivity {
@@ -79,13 +76,17 @@ public class ImageViewerActivity extends MainActivity {
     private String mCurrentPath;
     private Uri photoURI;
     byte[] baos;
+    byte[] pdfbyte;
+    String receivedimg;
     String imgString;
-    String URL = "https://192.168.137.1:5000/upload";
+    String URL = "http://192.168.137.1:5000/upload";
     JSONObject SSC;
     String ssc_value;
     TextView sscvalue;
     TextView home;
+    ImageView img;
     Animation a1, a2;
+
 
     /*
     private ProgressBar progressBar;
@@ -98,17 +99,19 @@ public class ImageViewerActivity extends MainActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_imageview2);
 
-        takePhoto();
-
         CardView ssccard = (CardView) findViewById(R.id.ssccard);
         sscvalue = (TextView) findViewById(R.id.sscvalue);
         home = (TextView) findViewById(R.id.homebutton);
+        img = (ImageView) findViewById(R.id.img);
+
+        takePhoto();
 
         a1 = AnimationUtils.loadAnimation(this, R.anim.anime_top_to_bottom);
         a2 = AnimationUtils.loadAnimation(this, R.anim.anime_bottom_to_top);
 
         ssccard.setAnimation(a1);
         home.setAnimation(a2);
+        img.setAnimation(a1);
 
         home.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -146,6 +149,11 @@ public class ImageViewerActivity extends MainActivity {
                 try {
                     getBytesFromBitmap(bmp);
                     sendHttpRequest();
+
+                    //Log.i("PDF", receivedimg);
+                    //pdfbyte = Base64.decode(receivedimg, Base64.DEFAULT);
+
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -254,9 +262,14 @@ public class ImageViewerActivity extends MainActivity {
                 public void onResponse(JSONObject response) {
                     Log.i("VOLLEY", response.toString());
                     SSC = response;
+                    Log.i("VOLLEYRESPONSE", SSC.toString());
+
 
                     try {
-                        ssc_value = SSC.getString("ssc"); }
+                        receivedimg = SSC.getString("pdf_img");
+                        ssc_value = SSC.getString("ssc");
+                        Log.i("PDF", receivedimg);
+                    }
                     catch (JSONException j) {
                         j.printStackTrace();
                     }
@@ -265,6 +278,17 @@ public class ImageViewerActivity extends MainActivity {
                     Animation a = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.anime_bottom_to_top);
                     sscvalue.setAnimation(a);
                     sscvalue.setText(ssc_value);
+
+                    try {
+                        pdfbyte = Base64.decode(receivedimg, DEFAULT);
+                        Bitmap receivedimgbitmap = BitmapFactory.decodeByteArray(pdfbyte, 0, pdfbyte.length);
+                        img.setImageBitmap(receivedimgbitmap);
+
+                    }
+
+                    catch (NullPointerException e) {
+                        e.printStackTrace();
+                    }
 
 
                 }
@@ -281,6 +305,7 @@ public class ImageViewerActivity extends MainActivity {
             Log.i("VOLLEY", "Object: " + jsonObject.toString());
 
             Volley.newRequestQueue(this).add(jsonObjectRequest);
+
 
         } catch (JSONException j) {
             Log.i("JSON", j.toString());
