@@ -86,6 +86,9 @@ public class ImageViewerActivity extends MainActivity {
     TextView home;
     ImageView img;
     Animation a1, a2;
+    static String parse_ssc;
+    String category;
+    static String parse_category;
 
 
     /*
@@ -93,6 +96,10 @@ public class ImageViewerActivity extends MainActivity {
     private Handler mhandler = new Handler();
     private int mProgressbar = 0;
 */
+
+    public ImageViewerActivity() {
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,6 +110,7 @@ public class ImageViewerActivity extends MainActivity {
         sscvalue = (TextView) findViewById(R.id.sscvalue);
         home = (TextView) findViewById(R.id.homebutton);
         img = (ImageView) findViewById(R.id.img);
+
 
         takePhoto();
 
@@ -117,6 +125,14 @@ public class ImageViewerActivity extends MainActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ImageViewerActivity.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        ssccard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ImageViewerActivity.this, ResultActivity.class);
                 startActivity(intent);
             }
         });
@@ -200,7 +216,7 @@ public class ImageViewerActivity extends MainActivity {
         File image = File.createTempFile(imageFileName,  /* prefix */".jpg",         /* suffix */storageDir);    /* directory */
 
         mCurrentPath = image.getAbsolutePath();
-        Log.i(TAG, "Name of file: " + mCurrentPath);
+        Log.i(TAG, "Name of  file: " + mCurrentPath);
         return image;
     }
 
@@ -268,7 +284,9 @@ public class ImageViewerActivity extends MainActivity {
                     try {
                         receivedimg = SSC.getString("pdf_img");
                         ssc_value = SSC.getString("ssc");
+                        category = SSC.getString("cat");
                         Log.i("PDF", receivedimg);
+                        Log.i("CATEGORY", category);
                     }
                     catch (JSONException j) {
                         j.printStackTrace();
@@ -278,6 +296,8 @@ public class ImageViewerActivity extends MainActivity {
                     Animation a = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.anime_bottom_to_top);
                     sscvalue.setAnimation(a);
                     sscvalue.setText(ssc_value);
+                    setSSC(ssc_value);
+                    setCategory(category);
 
                     try {
                         pdfbyte = Base64.decode(receivedimg, DEFAULT);
@@ -312,6 +332,25 @@ public class ImageViewerActivity extends MainActivity {
         }
 
         Log.i("VOLLEY", "Request OK");
+    }
+
+    public final void setSSC(String ssc_value) {
+        parse_ssc = ssc_value;
+        Log.i(TAG, parse_ssc);
+    }
+
+    public final void setCategory(String category) {
+        parse_category = category;
+        Log.i(TAG, "parse category: " + parse_category);
+    }
+
+    public static String getSSC() {
+        return parse_ssc;
+
+    }
+
+    public String getCategory() {
+        return parse_category;
     }
 
 
