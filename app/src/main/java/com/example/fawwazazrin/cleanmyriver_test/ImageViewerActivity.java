@@ -21,6 +21,7 @@ import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.provider.Settings;
 import android.provider.Telephony;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v4.view.animation.LinearOutSlowInInterpolator;
@@ -77,7 +78,7 @@ public class ImageViewerActivity extends MainActivity {
     private Uri photoURI;
     byte[] baos;
     byte[] pdfbyte;
-    String receivedimg;
+    static String receivedimg;
     String imgString;
     String URL = "http://192.168.137.1:5000/upload";
     JSONObject SSC;
@@ -89,6 +90,9 @@ public class ImageViewerActivity extends MainActivity {
     static String parse_ssc;
     String category;
     static String parse_category;
+    TextView result_show;
+    ConstraintLayout layout;
+    TextView valueclick;
 
 
     /*
@@ -110,6 +114,11 @@ public class ImageViewerActivity extends MainActivity {
         sscvalue = (TextView) findViewById(R.id.sscvalue);
         home = (TextView) findViewById(R.id.homebutton);
         img = (ImageView) findViewById(R.id.img);
+        result_show = (TextView) findViewById(R.id.result_show);
+        layout = (ConstraintLayout) findViewById(R.id.bg);
+        valueclick = (TextView) findViewById(R.id.valueclick);
+
+        valueclick.setVisibility(View.INVISIBLE);
 
 
         takePhoto();
@@ -119,7 +128,8 @@ public class ImageViewerActivity extends MainActivity {
 
         ssccard.setAnimation(a1);
         home.setAnimation(a2);
-        img.setAnimation(a1);
+        //img.setAnimation(a1);
+        result_show.setAnimation(a2);
 
         home.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -296,13 +306,16 @@ public class ImageViewerActivity extends MainActivity {
                     Animation a = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.anime_bottom_to_top);
                     sscvalue.setAnimation(a);
                     sscvalue.setText(ssc_value);
+                    result_show.setText(category);
+                    valueclick.setVisibility(View.VISIBLE);
+                    categoryCompare();
                     setSSC(ssc_value);
                     setCategory(category);
 
                     try {
                         pdfbyte = Base64.decode(receivedimg, DEFAULT);
                         Bitmap receivedimgbitmap = BitmapFactory.decodeByteArray(pdfbyte, 0, pdfbyte.length);
-                        img.setImageBitmap(receivedimgbitmap);
+                        //img.setImageBitmap(receivedimgbitmap);
 
                     }
 
@@ -351,6 +364,27 @@ public class ImageViewerActivity extends MainActivity {
 
     public String getCategory() {
         return parse_category;
+    }
+
+    public String getIMG() {
+        return receivedimg;
+    }
+
+    public void categoryCompare() {
+        if(category.equals("Dirty")) {
+            Log.i("CATEGORY COMPARE", "it is dirty");
+            layout.setBackgroundResource(R.drawable.red_gradient);
+        }
+
+        else if(category.equals("Average")) {
+            Log.i("CATEGORY COMPARE", "it is average");
+            layout.setBackgroundResource(R.drawable.orangegradient);
+        }
+
+        else if(category.equals("Clean")) {
+            Log.i("CATEGORY COMPARE", "it is clean");
+            layout.setBackgroundResource(R.drawable.green_gradient);
+        }
     }
 
 

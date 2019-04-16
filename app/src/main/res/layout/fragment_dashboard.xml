@@ -190,9 +190,11 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
                 android:layout_marginTop="8dp"
                 android:fontFamily="@font/roboto_condensed"
-                android:text="Take Care Our Earth"
+                android:text="Let's \nTake Care Our Earth"
                 android:textColor="@color/title"
                 android:textStyle="bold" />
 
@@ -203,7 +205,7 @@
                 android:fontFamily="@font/roboto_condensed"
                 android:gravity="center"
                 android:lineSpacingExtra="6dp"
-                android:text="The little effort of everyone may change into big one!"
+                android:text="The first step to something big"
                 android:textColor="@color/title" />
 
 
