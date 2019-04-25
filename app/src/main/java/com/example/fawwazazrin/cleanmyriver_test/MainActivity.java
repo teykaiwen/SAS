@@ -42,11 +42,11 @@ public class MainActivity extends AppCompatActivity {
 
     LocationManager locationManager;
     LocationListener locationListener;
-    static double loc_long;
-    static double loc_lat;
+    static double loc_long; //GPS longitude
+    static double loc_lat;  //GPS latitude
     String TAG = "MainActivity";
-    String finaladdress;
-    Animation topanimation;
+    String finaladdress;    //address variable from GPS coordinates
+    Animation topanimation;     //animation variable
 
 
     @Override
@@ -54,17 +54,22 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        topanimation = AnimationUtils.loadAnimation(this, R.anim.anime_top_to_bottom);
-        CardView camera_button = (CardView) findViewById(R.id.camera_button);
-        CardView help_button = (CardView) findViewById(R.id.help_button);
-        CardView about_button = (CardView) findViewById(R.id.about_button);
+        topanimation = AnimationUtils.loadAnimation(this, R.anim.anime_top_to_bottom);  //set topanimation with top to bottom animation from drawable
+        CardView camera_button = (CardView) findViewById(R.id.camera_button);   //camera button initialization
+        CardView help_button = (CardView) findViewById(R.id.help_button);   //help button initialization
+        CardView about_button = (CardView) findViewById(R.id.about_button);     //about button initialization
 
+        /*
+            Set animation for each button
+         */
         camera_button.setAnimation(topanimation);
         help_button.setAnimation(topanimation);
         about_button.setAnimation(topanimation);
 
 
-
+        /*
+            Set intent for the buttons
+         */
         camera_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -93,13 +98,17 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        /*
+            Location Manager to constantly detect location at a set interval of time
+         */
         locationManager = (LocationManager)getSystemService(LOCATION_SERVICE);
         locationListener = new LocationListener() {
+
             @Override
             public void onLocationChanged(Location location) {
                 loc_long = location.getLongitude();
                 loc_lat = location.getLatitude();
-                Log.i(TAG, "Location: " + loc_long + " " + loc_lat);
+                Log.i(TAG, "Location: " + loc_long + " " + loc_lat);    //to log the location
                 //getAddress(loc_lat, loc_long);
 
             }
@@ -114,6 +123,9 @@ public class MainActivity extends AppCompatActivity {
 
             }
 
+            /*
+                if location is disabled, the app directs to the Settings page
+             */
             @Override
             public void onProviderDisabled(String provider) {
                 Intent i = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
@@ -121,6 +133,9 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
+        /*
+            Checks permission from phone to access location
+         */
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 requestPermissions(new String[]
@@ -129,7 +144,7 @@ public class MainActivity extends AppCompatActivity {
                 return;
 
             } else {
-                locationFind();
+                locationFind();     //function that sets the interval to detect GPS location
             }
         }
 
@@ -137,10 +152,16 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    /*
+        Function to request location update
+     */
     public void locationFind() {
         locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 5000, 0, locationListener);
     }
 
+    /*
+        Function to write the address based on the GPS coordinates
+     */
     public String getAddress(double loc_lat, double loc_long) {
         Geocoder geocoder = new Geocoder(this, Locale.getDefault());
         //StringBuilder builder = new StringBuilder();
@@ -152,20 +173,23 @@ public class MainActivity extends AppCompatActivity {
                 String city = address.get(0).getAddressLine(0);
                 String state = address.get(0).getAdminArea();
                 finaladdress = city + " " + state;
-                Log.w(TAG, "Address: " + finaladdress);
+                Log.w(TAG, "Address: " + finaladdress);     //log address on the logcat
                 //ImageActivity.setAddress(finaladdress);
                 //ImageActivity.appearAddress();
 
-                return finaladdress;
+                return finaladdress;    //returns the address
 
             } else {
                 Log.w(TAG, "Address is null");
-                return null;
+                return "Address not detected";
             }
         } catch (IOException e) {
-            return null;
+            return "Address not detected";
         } catch (NullPointerException e) {
-            return null;
+            Log.i("LOCATION", "ADDRESS NOT DETECTED");
+            Toast toast = Toast.makeText(getApplicationContext(), "Location null", Toast.LENGTH_SHORT);
+            toast.show();
+            return "Address not detected";    //catch if it returns null
         }
     }
 

@@ -121,6 +121,9 @@ public class ImageViewerActivity extends MainActivity {
         valueclick.setVisibility(View.INVISIBLE);
 
 
+        /*
+            To start the camera intent
+         */
         takePhoto();
 
         a1 = AnimationUtils.loadAnimation(this, R.anim.anime_top_to_bottom);
@@ -273,6 +276,11 @@ public class ImageViewerActivity extends MainActivity {
     public void sendHttpRequest() {
 
         finaladdress = getAddress(loc_lat, loc_long);
+
+        //if finaladdress is not found, return address not found
+        if(finaladdress == null) {
+            finaladdress = "Address not found";
+        }
         Log.i("ADDRESS", finaladdress);
 
         try {
