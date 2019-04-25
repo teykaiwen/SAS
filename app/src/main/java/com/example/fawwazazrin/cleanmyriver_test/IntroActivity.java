@@ -17,8 +17,6 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-//if cant run, delete Introactivity on manifest
-
 public class IntroActivity extends AppCompatActivity {
 
     private ViewPager screenPager;
@@ -35,29 +33,6 @@ public class IntroActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_intro);
-
-        // make the activity on full screen
-
-        /*
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
-
-        // when this activity is about to be launch we need to check if its opened before or not
-
-        if (restorePrefData()) {
-
-            Intent mainActivity = new Intent(getApplicationContext(),MainActivity.class );
-            startActivity(mainActivity);
-            finish();
-
-
-        }   */
-
-        // hide the action bar
-
-        //getSupportActionBar().hide();
 
         // in views
         btnNext = findViewById(R.id.btn_next);
@@ -109,7 +84,6 @@ public class IntroActivity extends AppCompatActivity {
         });
 
         // tablayout add change listener
-
 
         tabIndicator.addOnTabSelectedListener(new TabLayout.BaseOnTabSelectedListener() {
             @Override
@@ -178,16 +152,6 @@ public class IntroActivity extends AppCompatActivity {
 
     }
 
-    /*
-    private void savePrefsData() {
-
-        SharedPreferences pref = getApplicationContext().getSharedPreferences("myPrefs",MODE_PRIVATE);
-        SharedPreferences.Editor editor = pref.edit();
-        editor.putBoolean("isIntroOpened",true);
-        editor.commit();
-
-
-    }*/
 
     // show the GETSTARTED Button and hide the indicator and the next button
     private void loaddLastScreen() {

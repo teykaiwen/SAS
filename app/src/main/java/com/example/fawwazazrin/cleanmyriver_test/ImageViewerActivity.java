@@ -1,71 +1,47 @@
 package com.example.fawwazazrin.cleanmyriver_test;
 
 import android.Manifest;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.location.Address;
-import android.location.Geocoder;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Handler;
-import android.os.StrictMode;
 import android.provider.MediaStore;
-import android.provider.Settings;
-import android.provider.Telephony;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
-import android.support.v4.view.animation.LinearOutSlowInInterpolator;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-
 import static android.util.Base64.DEFAULT;
-import static java.lang.Character.isUpperCase;
+
+/*
+            This page is shown right after image is taken.
+         */
 
 public class ImageViewerActivity extends MainActivity {
 
@@ -94,12 +70,6 @@ public class ImageViewerActivity extends MainActivity {
     ConstraintLayout layout;
     TextView valueclick;
 
-
-    /*
-    private ProgressBar progressBar;
-    private Handler mhandler = new Handler();
-    private int mProgressbar = 0;
-*/
 
     public ImageViewerActivity() {
 
@@ -151,9 +121,6 @@ public class ImageViewerActivity extends MainActivity {
         });
 
 
-        //coordinates = (TextView) findViewById(R.id.coordinates);
-        //addressText = (TextView) findViewById(R.id.addrTextView);
-
 
     }
 
@@ -178,10 +145,6 @@ public class ImageViewerActivity extends MainActivity {
                 try {
                     getBytesFromBitmap(bmp);
                     sendHttpRequest();
-
-                    //Log.i("PDF", receivedimg);
-                    //pdfbyte = Base64.decode(receivedimg, Base64.DEFAULT);
-
 
                 } catch (JSONException e) {
                     e.printStackTrace();

@@ -7,14 +7,14 @@ import android.os.Bundle;
 
 /*
 
-   Splash screen after the app is opened
+   Splash screen is run right after the app is opened
 
  */
 
 public class SplashActivity extends AppCompatActivity {
 
 
-    private static int SPLASH_TIME_OUT = 2000;      //Splash time in millisecond
+    private static int SPLASH_TIME_OUT = 2000;      //Splash time is in millisecond
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
