@@ -13,6 +13,10 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
+/*
+            Dashboard of fragment in About Page
+         */
+
 public class DashboardFrag extends Fragment {
 
     private CardView cardTop,cardRight,cardLeft,cardLeft2;

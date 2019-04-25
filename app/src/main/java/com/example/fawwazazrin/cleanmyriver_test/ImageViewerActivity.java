@@ -38,7 +38,13 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+
 import static android.util.Base64.DEFAULT;
+
+/*
+            This page is shown right after image is taken.
+         */
+
 
 public class ImageViewerActivity extends MainActivity {
 
@@ -71,6 +77,7 @@ public class ImageViewerActivity extends MainActivity {
     TextView result_show;
     ConstraintLayout layout;
     TextView valueclick;    //TextView when clicked, direct user to ResultActivity
+
 
     public ImageViewerActivity() {
 
@@ -122,9 +129,6 @@ public class ImageViewerActivity extends MainActivity {
         });
 
 
-        //coordinates = (TextView) findViewById(R.id.coordinates);
-        //addressText = (TextView) findViewById(R.id.addrTextView);
-
 
     }
 
@@ -149,10 +153,6 @@ public class ImageViewerActivity extends MainActivity {
                 try {
                     getBytesFromBitmap(bmp);
                     sendHttpRequest();
-
-                    //Log.i("PDF", receivedimg);
-                    //pdfbyte = Base64.decode(receivedimg, Base64.DEFAULT);
-
 
                 } catch (JSONException e) {
                     e.printStackTrace();

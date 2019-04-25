@@ -3,10 +3,7 @@ package com.example.fawwazazrin.cleanmyriver_test;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.support.annotation.ColorInt;
 import android.support.constraint.ConstraintLayout;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
@@ -94,8 +91,6 @@ public class ResultActivity extends AppCompatActivity {
      */
     public void convertString2Float() {
         value = Float.parseFloat(sscvalue);
-        //categoryMap();
-
 
     }
 
