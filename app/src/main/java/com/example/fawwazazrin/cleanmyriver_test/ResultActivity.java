@@ -58,9 +58,9 @@ public class ResultActivity extends AppCompatActivity {
 
 
         ImageViewerActivity i = new ImageViewerActivity();
-        sscvalue = i.getSSC();
-        category = i.getCategory();
-        pdfimg = i.getIMG();
+        sscvalue = i.getSSC();  //retrieves the SSC value from ImageViewerActivity
+        category = i.getCategory(); //retrieves the category from ImageViewerActivity
+        pdfimg = i.getIMG(); //retrieves
 
         try {
             pdfbyte = Base64.decode(pdfimg, DEFAULT);
@@ -89,6 +89,9 @@ public class ResultActivity extends AppCompatActivity {
 
     }
 
+    /*
+        Converts the string received from JSON to float
+     */
     public void convertString2Float() {
         value = Float.parseFloat(sscvalue);
         //categoryMap();
@@ -96,10 +99,13 @@ public class ResultActivity extends AppCompatActivity {
 
     }
 
+    /*
+        Compares the category
+     */
     public void categoryCompare() {
         if(category.equals("Dirty")) {
-            Log.i("CATEGORY COMPARE", "it is dirty");
-            layout.setBackgroundResource(R.drawable.red_gradient);
+            Log.i("CATEGORY COMPARE", "it is dirty");   //log for debugging purposes
+            layout.setBackgroundResource(R.drawable.red_gradient);  //background change based on the category received
         }
 
         else if(category.equals("Average")) {
@@ -113,30 +119,5 @@ public class ResultActivity extends AppCompatActivity {
         }
     }
 
-    /*
-    public void categoryMap() {
 
-        if(value >= 2) {
-            category = "Not Healthy";
-            category_text.setText(category);
-            cardView.setCardBackgroundColor(Color.RED);
-            category_text.setTextColor(Color.WHITE);
-
-        }
-
-        if(value < 0) {
-            category = "Not Valid";
-            category_text.setText(category);
-            category_text.setTextColor(Color.BLACK);
-        }
-
-        if(value >= 0 && value < 2) {
-            category = "Healthy";
-            category_text.setText(category);
-            cardView.setCardBackgroundColor(Color.GREEN);
-            category_text.setTextColor(Color.WHITE);
-
-        }
-
-    } */
 }

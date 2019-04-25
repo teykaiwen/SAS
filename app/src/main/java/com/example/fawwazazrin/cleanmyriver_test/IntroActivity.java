@@ -17,7 +17,11 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-//if cant run, delete Introactivity on manifest
+/*
+    Slider page that starts after Splash screen
+    By default, it is not set due to it being incompatible on some phones with low RAM
+    Go to Splash screen and replace MainActivity.this to IntroActivity.this
+ */
 
 public class IntroActivity extends AppCompatActivity {
 
@@ -110,7 +114,9 @@ public class IntroActivity extends AppCompatActivity {
 
         // tablayout add change listener
 
-
+        /*
+            Method to display the indicator
+         */
         tabIndicator.addOnTabSelectedListener(new TabLayout.BaseOnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {

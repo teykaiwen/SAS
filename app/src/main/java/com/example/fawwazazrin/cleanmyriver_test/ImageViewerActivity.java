@@ -1,71 +1,44 @@
 package com.example.fawwazazrin.cleanmyriver_test;
 
 import android.Manifest;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.location.Address;
-import android.location.Geocoder;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Handler;
-import android.os.StrictMode;
 import android.provider.MediaStore;
-import android.provider.Settings;
-import android.provider.Telephony;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
-import android.support.v4.view.animation.LinearOutSlowInInterpolator;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
 
 import static android.util.Base64.DEFAULT;
-import static java.lang.Character.isUpperCase;
 
 public class ImageViewerActivity extends MainActivity {
 
@@ -80,26 +53,24 @@ public class ImageViewerActivity extends MainActivity {
     byte[] pdfbyte;
     static String receivedimg;
     String imgString;
+
+    /*
+        HTTP URL
+     */
     String URL = "http://192.168.137.1:5000/upload";
-    JSONObject SSC;
-    String ssc_value;
+
+    JSONObject SSC; //gets the JSON file from server
+    String ssc_value;   //stores the ssc value
     TextView sscvalue;
     TextView home;
     ImageView img;
     Animation a1, a2;
-    static String parse_ssc;
-    String category;
-    static String parse_category;
+    static String parse_ssc;    //to parse the ssc to ResultActivity
+    String category;    //stores the category received from server
+    static String parse_category;   //to parse the category to ResultActivity
     TextView result_show;
     ConstraintLayout layout;
-    TextView valueclick;
-
-
-    /*
-    private ProgressBar progressBar;
-    private Handler mhandler = new Handler();
-    private int mProgressbar = 0;
-*/
+    TextView valueclick;    //TextView when clicked, direct user to ResultActivity
 
     public ImageViewerActivity() {
 
@@ -207,7 +178,10 @@ public class ImageViewerActivity extends MainActivity {
             e.printStackTrace();
         }
 
+        //when photo file is not null
         if (photofile!=null) {
+
+            //get file URI from image
             photoURI = FileProvider.getUriForFile(this, BuildConfig.APPLICATION_ID + ".provider", createFile());
             Log.i(TAG, "photofile not null");
 
@@ -228,6 +202,7 @@ public class ImageViewerActivity extends MainActivity {
         File storageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM), "Camera");
         File image = File.createTempFile(imageFileName,  /* prefix */".jpg",         /* suffix */storageDir);    /* directory */
 
+        //gets image file path
         mCurrentPath = image.getAbsolutePath();
         Log.i(TAG, "Name of  file: " + mCurrentPath);
         return image;
@@ -264,6 +239,9 @@ public class ImageViewerActivity extends MainActivity {
         }
     }
 
+    /*
+        Method to convert the image into a 64 byte string array
+     */
     public void getBytesFromBitmap(Bitmap bitmap) throws JSONException {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 90, stream);
@@ -273,8 +251,13 @@ public class ImageViewerActivity extends MainActivity {
 
     }
 
+    /*
+        Method to send http request
+     */
+
     public void sendHttpRequest() {
 
+        //gets the address from the address generator method
         finaladdress = getAddress(loc_lat, loc_long);
 
         //if finaladdress is not found, return address not found
@@ -283,6 +266,9 @@ public class ImageViewerActivity extends MainActivity {
         }
         Log.i("ADDRESS", finaladdress);
 
+        /*
+            Encapsulate the relevant information to a JSON file
+         */
         try {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("phone_brand", manufacturer);
@@ -291,13 +277,17 @@ public class ImageViewerActivity extends MainActivity {
             jsonObject.put("longitude", loc_long);
             jsonObject.put("image", imgString);
 
+            //send an object request
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, URL, jsonObject, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
                     Log.i("VOLLEY", response.toString());
                     SSC = response;
-                    Log.i("VOLLEYRESPONSE", SSC.toString());
+                    Log.i("VOLLEYRESPONSE", SSC.toString());    //logs the response to the logcat
 
+                    /*
+                        Try to get the string from the JSON file sent by the server
+                     */
 
                     try {
                         receivedimg = SSC.getString("pdf_img");
@@ -310,7 +300,7 @@ public class ImageViewerActivity extends MainActivity {
                         j.printStackTrace();
                     }
 
-                    Log.i("RESPONSE", ssc_value);
+                    Log.i("RESPONSE", ssc_value);   //logs the response
                     Animation a = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.anime_bottom_to_top);
                     sscvalue.setAnimation(a);
                     sscvalue.setText(ssc_value);
@@ -345,6 +335,7 @@ public class ImageViewerActivity extends MainActivity {
             Log.i("VOLLEY", jsonObjectRequest.toString());
             Log.i("VOLLEY", "Object: " + jsonObject.toString());
 
+            //gets json request
             Volley.newRequestQueue(this).add(jsonObjectRequest);
 
 
@@ -355,29 +346,47 @@ public class ImageViewerActivity extends MainActivity {
         Log.i("VOLLEY", "Request OK");
     }
 
+    /*
+        method to set the SSC value obtained from server
+     */
     public final void setSSC(String ssc_value) {
         parse_ssc = ssc_value;
         Log.i(TAG, parse_ssc);
     }
 
+    /*
+        method to set the category parsed from server
+     */
     public final void setCategory(String category) {
         parse_category = category;
         Log.i(TAG, "parse category: " + parse_category);
     }
 
+    /*
+        Returns the SSC value
+     */
     public static String getSSC() {
         return parse_ssc;
 
     }
 
+    /*
+        Returns the category
+     */
     public String getCategory() {
         return parse_category;
     }
 
+    /*
+        Returns the received image
+     */
     public String getIMG() {
         return receivedimg;
     }
 
+    /*
+        Methods to compare category received from server
+     */
     public void categoryCompare() {
         if(category.equals("Dirty")) {
             Log.i("CATEGORY COMPARE", "it is dirty");

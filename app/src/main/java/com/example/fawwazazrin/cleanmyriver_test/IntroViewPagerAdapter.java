@@ -14,7 +14,7 @@ import java.util.List;
 public class IntroViewPagerAdapter extends PagerAdapter {
 
     Context mContext ;
-    List<ScreenItem> mListScreen;
+    List<ScreenItem> mListScreen; //list of items to be displayed on the IntroActivity
 
     public IntroViewPagerAdapter(Context mContext, List<ScreenItem> mListScreen) {
         this.mContext = mContext;
@@ -33,6 +33,9 @@ public class IntroViewPagerAdapter extends PagerAdapter {
         TextView title = layoutScreen.findViewById(R.id.intro_title);
         TextView description = layoutScreen.findViewById(R.id.intro_description);
 
+        /*
+            Sets the image to be displayed
+         */
         title.setText(mListScreen.get(position).getTitle());
         description.setText(mListScreen.get(position).getDescription());
         imgSlide.setImageResource(mListScreen.get(position).getScreenImg());

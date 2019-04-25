@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 public class AboutActivity extends AppCompatActivity {
 
+
     FragmentManager fragmentManager;
     FragmentTransaction fragmentTransaction ;
 
@@ -15,6 +16,7 @@ public class AboutActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
 
+        //gets the fragment from fragmentManager class
         fragmentManager = getSupportFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
 
